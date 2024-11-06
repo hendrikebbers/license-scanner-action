@@ -40,12 +40,7 @@ runs:
       id: license_output
       run: |
           content=$(cat $GITHUB_WORKSPACE/licenses.txt)
-          echo "::set-output name=licenses_content::$content"
-
-    - name: Display Licenses Content
-      shell: bash
-      run: |
-        echo "Licenses Content: ${{ steps.license_output.outputs.licenses_content }}"
+          echo "{licenses}={$content}" >> $GITHUB_OUTPUT
 
 branding:
   icon: "share-2"
