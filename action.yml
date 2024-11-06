@@ -39,7 +39,7 @@ runs:
       shell: bash
       id: license_output
       run: |
-          content=$(base64 $GITHUB_WORKSPACE/licenses.txt)
+          content=$(base64 -w 0 $GITHUB_WORKSPACE/licenses.txt
           echo "{licenses}={$content}" >> $GITHUB_OUTPUT
 
 branding:
