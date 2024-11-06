@@ -42,7 +42,8 @@ runs:
       id: license_output
       run: |
           content=$(base64 -w 0 $GITHUB_WORKSPACE/licenses.txt)
-          echo "licenses={$content}" >> $GITHUB_OUTPUT
+          cat $content        # Print contents for debugging
+          echo "licenses=$content" >> $GITHUB_OUTPUT
 
 branding:
   icon: "share-2"
