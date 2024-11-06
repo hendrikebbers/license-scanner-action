@@ -1,0 +1,47 @@
+name: "License Scanner"
+description: "Runs a license scan on the project"
+inputs:
+  language:
+    description: "The used programming language"
+    required: true
+    default: "java"
+outputs:
+  licenses:
+    description: "All found licenses"
+    value: ${{ steps.create-account.outputs.accountId }}
+runs:
+  using: "composite"
+  steps:
+    - name: print inputs
+      shell: bash
+      run: |
+        echo "language: ${{ inputs.language }}"
+
+    - name: Setup Java
+      uses: actions/setup-java@99b8673ff64fbf99d8d325f52d9a5bdedb8483e9 # v4.2.1
+      with:
+        distribution: temurin
+        java-version: 21
+
+    - name: Install wget CLI
+      shell: bash
+      run: sudo apt-get update && sudo apt-get install -y wget
+
+    - name: Download file with wget
+      run: wget https://repo1.maven.org/maven2/com/open-elements/oss-license-scanner/0.2.0/oss-license-scanner-0.2.0.jar -O $GITHUB_WORKSPACE/oss-license-scanner-0.2.0.jar
+
+    - name: Run License Scanner
+      run: java -jar $GITHUB_WORKSPACE/oss-license-scanner-0.2.0.jar java -l $GITHUB_WORKSPACE > $GITHUB_WORKSPACE/licenses.txt
+
+      - name: Set licenses.txt content as output
+        id: license_output
+        run: |
+            content=$(cat $GITHUB_WORKSPACE/licenses.txt)
+            echo "::set-output name=licenses_content::$content"
+
+        - name: Display Licenses Content
+          run: echo "Licenses Content: ${{ steps.license_output.outputs.licenses_content }}"
+
+branding:
+  icon: "share-2"
+  color: "black"
