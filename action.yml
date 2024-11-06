@@ -35,15 +35,15 @@ runs:
       shell: bash
       run: java -jar $GITHUB_WORKSPACE/oss-license-scanner-0.2.0.jar java -l $GITHUB_WORKSPACE > $GITHUB_WORKSPACE/licenses.txt
 
-      - name: Set licenses.txt content as output
-        shell: bash
-        id: license_output
-        run: |
-            content=$(cat $GITHUB_WORKSPACE/licenses.txt)
-            echo "::set-output name=licenses_content::$content"
+    - name: Set licenses.txt content as output
+      shell: bash
+      id: license_output
+      run: |
+          content=$(cat $GITHUB_WORKSPACE/licenses.txt)
+          echo "::set-output name=licenses_content::$content"
 
-        - name: Display Licenses Content
-          run: echo "Licenses Content: ${{ steps.license_output.outputs.licenses_content }}"
+    - name: Display Licenses Content
+      run: echo "Licenses Content: ${{ steps.license_output.outputs.licenses_content }}"
 
 branding:
   icon: "share-2"
