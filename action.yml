@@ -33,14 +33,16 @@ runs:
 
     - name: Run License Scanner
       shell: bash
-      run: java -jar $GITHUB_WORKSPACE/oss-license-scanner-0.2.0.jar java -l $GITHUB_WORKSPACE > $GITHUB_WORKSPACE/licenses.txt
+      run: |
+          java -jar $GITHUB_WORKSPACE/oss-license-scanner-0.2.0.jar java -l $GITHUB_WORKSPACE > $GITHUB_WORKSPACE/licenses.txt
+          cat $GITHUB_WORKSPACE/licenses.txt  # Print contents for debugging
 
     - name: Set licenses.txt content as output
       shell: bash
       id: license_output
       run: |
           content=$(base64 -w 0 $GITHUB_WORKSPACE/licenses.txt)
-          echo "{licenses}={$content}" >> $GITHUB_OUTPUT
+          echo "licenses={$content}" >> $GITHUB_OUTPUT
 
 branding:
   icon: "share-2"
