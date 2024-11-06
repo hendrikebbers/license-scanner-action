@@ -34,7 +34,7 @@ runs:
     - name: Run License Scanner
       shell: bash
       run: |
-          java -jar $GITHUB_WORKSPACE/oss-license-scanner-0.2.0.jar java -l $GITHUB_WORKSPACE > $GITHUB_WORKSPACE/licenses.txt
+          java -jar $GITHUB_WORKSPACE/oss-license-scanner-0.2.0.jar java -l $GITHUB_WORKSPACE --markdown > $GITHUB_WORKSPACE/licenses.txt
           cat $GITHUB_WORKSPACE/licenses.txt  # Print contents for debugging
 
     - name: Set licenses.txt content as output
