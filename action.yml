@@ -29,20 +29,18 @@ runs:
 
     - name: Download file with wget
       shell: bash
-      run: wget https://repo1.maven.org/maven2/com/open-elements/oss-license-scanner/0.2.0/oss-license-scanner-0.2.0.jar -O $GITHUB_WORKSPACE/oss-license-scanner-0.2.0.jar
+      run: wget https://repo1.maven.org/maven2/com/open-elements/oss-license-scanner/0.3.0/oss-license-scanner-0.3.0.jar -O $GITHUB_WORKSPACE/oss-license-scanner-0.3.0.jar
 
     - name: Run License Scanner
       shell: bash
       run: |
-          java -jar $GITHUB_WORKSPACE/oss-license-scanner-0.2.0.jar java -l $GITHUB_WORKSPACE --markdown --normalize > $GITHUB_WORKSPACE/licenses.txt
-          cat $GITHUB_WORKSPACE/licenses.txt  # Print contents for debugging
+          java -jar $GITHUB_WORKSPACE/oss-license-scanner-0.3.0.jar java -l $GITHUB_WORKSPACE --markdown --normalize > $GITHUB_WORKSPACE/licenses.txt
 
     - name: Set licenses.txt content as output
       shell: bash
       id: license_output
       run: |
           content=$(base64 -w 0 $GITHUB_WORKSPACE/licenses.txt)
-          echo $content        # Print contents for debugging
           echo "licenses=$content" >> $GITHUB_OUTPUT
 
 branding:
